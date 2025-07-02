@@ -6,10 +6,8 @@ class Solution:
                                          subtotal * group % MOD, groups)
     if k <= len(groups):
       return totalCombinations
-
-    # dp[j] := the number of ways to form strings of length j using groups[0..i]
     dp = [0] * k
-    dp[0] = 1  # Base case: empty string
+    dp[0] = 1 
 
     for i, group in enumerate(groups):
       newDp = [0] * k
@@ -24,10 +22,6 @@ class Solution:
     return (totalCombinations - sum(dp)) % MOD
 
   def _getConsecutiveLetters(self, word: str) -> list[int]:
-    """
-    Returns consecutive identical letters in the input string.
-    e.g. "aabbbc" -> [2, 3, 1].
-    """
     groups = []
     group = 1
     for i in range(1, len(word)):
