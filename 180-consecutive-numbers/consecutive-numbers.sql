@@ -1,4 +1,4 @@
-/* Write your T-SQL query statement below */
+# Write your MySQL query statement below
 SELECT DISTINCT l1.num AS ConsecutiveNums
 FROM Logs l1
 JOIN Logs l2 ON l1.id = l2.id - 1
