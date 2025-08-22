@@ -1,29 +1,27 @@
-class Solution(object):
-    def multiply(self, num1, num2):
-        """
-        :type num1: str
-        :type num2: str
-        :rtype: str
-        """
+class Solution:
+    def multiply(self, num1: str, num2: str) -> str:
+        # Handle zero shortcut
         if num1 == "0" or num2 == "0":
             return "0"
 
-        result = [0] * (len(num1) + len(num2))
+        m, n = len(num1), len(num2)            # lengths of inputs
+        res = [0] * (m + n)                    # result array for digits
 
-        for i in range(len(num1) - 1, -1, -1):
-            for j in range(len(num2) - 1, -1, -1):
-                digit1 = ord(num1[i]) - ord('0')
-                digit2 = ord(num2[j]) - ord('0')
-                product = digit1 * digit2
-                pos1 = i + j
-                pos2 = i + j + 1
+        # multiply from right to left
+        for i in range(m - 1, -1, -1):         # i points into num1
+            d1 = ord(num1[i]) - 48             # digit value of num1[i]
+            for j in range(n - 1, -1, -1):     # j points into num2
+                d2 = ord(num2[j]) - 48         # digit value of num2[j]
+                mul = d1 * d2                  # product of digits
+                p2 = i + j + 1                 # ones position for this pair
+                p1 = i + j                     # carry position for this pair
+                s = mul + res[p2]              # add existing carry at p2
+                res[p2] = s % 10               # write ones digit
+                res[p1] += s // 10             # add carry to p1
 
-                total = product + result[pos2]
-                result[pos2] = total % 10
-                result[pos1] += total // 10
+        # skip leading zeros
+        i = 0                                  # start at the leftmost
+        while i < len(res) and res[i] == 0:
+            i += 1
 
-        start = 0
-        while start < len(result) and result[start] == 0:
-            start += 1
-
-        return ''.join(str(d) for d in result[start:])
+        return "".join(str(d) for d in res[i:])  # join remaining digits
